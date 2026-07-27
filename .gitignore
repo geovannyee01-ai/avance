@@ -1,0 +1,26 @@
+node_modules
+dist
+dist-ssr
+*.local
+
+# Environment variables (Supabase URL/key) — never commit real credentials
+.env
+.env.*
+!.env.example
+
+# Editor/OS
+.vscode/*
+!.vscode/extensions.json
+.DS_Store
+
+# Claude Code local tooling config (not part of the app)
+.claude/
+
+# Excel scratch files with real payroll data kept outside the app for
+# reference — never part of the build, never pushed to GitHub
+*.xlsx
+*.xls
+~$*
+
+# Stray artifact export sitting at the project root, superseded by src/App.jsx
+/32bb6f5a-edac-4925-a16a-33a68dcc0afa.tsx
