@@ -721,7 +721,17 @@ function Footer() {
               </a>
             </div>
           </div>
-          <FooterCol title="Nosotros" links={["Quiénes somos", "Nuestro equipo", "Trabaja con nosotros"]} />
+          <div>
+            <div style={{ fontFamily: BODY, fontWeight: 700, fontSize: 13, color: C.ink, marginBottom: 14 }}>Nosotros</div>
+            <div style={{ fontFamily: BODY, fontWeight: 700, fontSize: 11, color: C.gold, textTransform: "uppercase", letterSpacing: 0.4, marginBottom: 5 }}>Misión</div>
+            <p style={{ fontFamily: BODY, fontSize: 12.5, color: C.inkFaint, lineHeight: 1.5, margin: "0 0 14px" }}>
+              Darle a cada colaborador dominicano acceso justo y transparente al salario que ya devengó, como alternativa real al préstamo informal.
+            </p>
+            <div style={{ fontFamily: BODY, fontWeight: 700, fontSize: 11, color: C.teal, textTransform: "uppercase", letterSpacing: 0.4, marginBottom: 5 }}>Visión</div>
+            <p style={{ fontFamily: BODY, fontSize: 12.5, color: C.inkFaint, lineHeight: 1.5, margin: 0 }}>
+              Ser la plataforma de bienestar financiero laboral líder en República Dominicana.
+            </p>
+          </div>
           <FooterCol title="Contacto" links={[
             { label: "ventas@avance.com.do", href: "mailto:ventas@avance.com.do" },
             { label: "+1 (849) 587-1799", href: waLink("Hola, quisiera más información sobre Avance.") },
