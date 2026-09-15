@@ -57,6 +57,50 @@ const GLOBAL_CSS = `
   .spin { animation: av-spin 1s linear infinite; }
   @keyframes av-spin { to { transform: rotate(360deg); } }
 
+  /* --- 2027-ish polish: glass cards, glow, reveal-on-scroll, skeletons --- */
+  .av-card {
+    background: ${C.card}CC;
+    backdrop-filter: blur(14px) saturate(140%);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+    border: 1px solid ${C.cardBorder};
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease, box-shadow 0.25s ease;
+  }
+  .av-card-hoverable:hover {
+    transform: translateY(-3px);
+    border-color: ${C.gold}66;
+    box-shadow: 0 16px 40px -20px #00000090, 0 0 0 1px ${C.gold}22;
+  }
+  .av-btn { transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.18s ease, filter 0.18s ease; }
+  .av-btn:hover { transform: translateY(-2px); filter: brightness(1.06); }
+  .av-btn:active { transform: translateY(0) scale(0.97); }
+
+  .av-glow-orb {
+    position: absolute; border-radius: 50%; filter: blur(70px); pointer-events: none;
+    animation: av-drift 12s ease-in-out infinite alternate;
+  }
+  @keyframes av-drift {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(-14px, 18px) scale(1.08); }
+  }
+  @keyframes av-ping {
+    0% { transform: scale(0.9); opacity: 0.9; }
+    100% { transform: scale(1.5); opacity: 0; }
+  }
+
+  .av-reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1); }
+  .av-reveal.av-in { opacity: 1; transform: translateY(0); }
+
+  @keyframes av-shimmer { 0% { background-position: -400px 0; } 100% { background-position: 400px 0; } }
+  .av-skeleton {
+    background: linear-gradient(90deg, ${C.card} 25%, ${C.cardBorder} 50%, ${C.card} 75%);
+    background-size: 800px 100%;
+    animation: av-shimmer 1.6s linear infinite;
+    border-radius: 8px;
+  }
+
+  @keyframes av-fade-scale { from { opacity: 0; transform: scale(0.97); } to { opacity: 1; transform: scale(1); } }
+  .av-fade-scale { animation: av-fade-scale 0.45s cubic-bezier(0.16, 1, 0.3, 1) both; }
+
   /* --- marketing site grids --- */
   .av-nav-links { display: flex; gap: 26px; }
   .av-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
@@ -162,9 +206,9 @@ function compressImageFile(file, maxWidth = 900, quality = 0.6) {
 /* ---------------------------------------------------------------------
    SHARED ATOMS (used by both the website and the app)
 ------------------------------------------------------------------- */
-function Card({ children, style }) {
+function Card({ children, style, hoverable = true }) {
   return (
-    <div style={{ background: C.card, border: `1px solid ${C.cardBorder}`, borderRadius: 16, padding: 22, ...style }}>
+    <div className={`av-card${hoverable ? " av-card-hoverable" : ""}`} style={{ borderRadius: 16, padding: 22, ...style }}>
       {children}
     </div>
   );
@@ -216,22 +260,20 @@ function Button({ children, onClick, variant = "primary", disabled, type = "butt
   const base = {
     fontFamily: BODY, fontWeight: 600, fontSize: 14.5, borderRadius: 10,
     padding: "12px 20px", border: "none", cursor: disabled ? "not-allowed" : "pointer",
-    transition: "transform 0.12s ease, opacity 0.12s ease", opacity: disabled ? 0.5 : 1,
+    opacity: disabled ? 0.5 : 1,
     display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 8,
   };
   const variants = {
-    primary: { background: C.gold, color: "#2B1B0F" },
+    primary: { background: C.gold, color: "#2B1B0F", boxShadow: `0 8px 24px -12px ${C.gold}99` },
     secondary: { background: "transparent", color: C.ink, border: `1px solid ${C.cardBorder}` },
-    teal: { background: C.teal, color: "#0F2A26" },
+    teal: { background: C.teal, color: "#0F2A26", boxShadow: `0 8px 24px -12px ${C.teal}99` },
     ghost: { background: "transparent", color: C.inkDim },
   };
   return (
     <button
       type={type} onClick={disabled ? undefined : onClick} disabled={disabled}
+      className="av-btn"
       style={{ ...base, ...variants[variant], ...style }}
-      onMouseDown={(e) => { if (!disabled) e.currentTarget.style.transform = "scale(0.97)"; }}
-      onMouseUp={(e) => { e.currentTarget.style.transform = "scale(1)"; }}
-      onMouseLeave={(e) => { e.currentTarget.style.transform = "scale(1)"; }}
     >
       {children}
     </button>
@@ -243,12 +285,12 @@ function PrimaryButton({ children, onClick, href, type, disabled, style }) {
   const Tag = href ? "a" : "button";
   return (
     <Tag
-      href={href} onClick={onClick} type={type} disabled={disabled}
+      href={href} onClick={onClick} type={type} disabled={disabled} className="av-btn"
       style={{
         fontFamily: BODY, fontWeight: 700, fontSize: 15, borderRadius: 11, padding: "13px 24px",
         border: "none", cursor: disabled ? "not-allowed" : "pointer", opacity: disabled ? 0.6 : 1,
         background: C.gold, color: "#2B1B0F", display: "inline-flex", alignItems: "center", gap: 8,
-        textDecoration: "none", ...style,
+        textDecoration: "none", boxShadow: `0 10px 30px -14px ${C.gold}AA`, ...style,
       }}
     >
       {children}
@@ -261,6 +303,7 @@ function GhostButton({ children, onClick, href, style }) {
   return (
     <Tag
       href={href} onClick={onClick} target={external ? "_blank" : undefined} rel={external ? "noopener noreferrer" : undefined}
+      className="av-btn"
       style={{
         fontFamily: BODY, fontWeight: 600, fontSize: 15, borderRadius: 11, padding: "12px 22px",
         border: `1px solid ${C.cardBorder}`, cursor: "pointer", background: "transparent", color: C.ink,
@@ -298,13 +341,67 @@ function PaydayRing({ day, size = 132 }) {
   );
 }
 
+/* ---------------------------------------------------------------------
+   Reveal — fades/slides content in the first time it scrolls into view.
+   Falls back to always-visible if IntersectionObserver isn't available.
+------------------------------------------------------------------- */
+function Reveal({ children, style }) {
+  const ref = useRef(null);
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    if (typeof IntersectionObserver === "undefined") { setVisible(true); return; }
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { setVisible(true); obs.disconnect(); } },
+      { threshold: 0.15, rootMargin: "0px 0px -60px 0px" }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+  return (
+    <div ref={ref} className={`av-reveal${visible ? " av-in" : ""}`} style={style}>
+      {children}
+    </div>
+  );
+}
+
+// Animates a number counting up from 0 the first time it scrolls into view.
+function useCountUp(target, { duration = 1100 } = {}) {
+  const ref = useRef(null);
+  const [value, setValue] = useState(0);
+  useEffect(() => {
+    if (typeof IntersectionObserver === "undefined") { setValue(target); return; }
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        obs.disconnect();
+        const start = performance.now();
+        const tick = (now) => {
+          const t = Math.min(1, (now - start) / duration);
+          const eased = 1 - Math.pow(1 - t, 3);
+          setValue(Math.round(target * eased));
+          if (t < 1) requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+      },
+      { threshold: 0.3 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, [target, duration]);
+  return [ref, value];
+}
+
 /* =======================================================================
    PART 1 — MARKETING WEBSITE
 ======================================================================= */
 function Section({ id, children, style }) {
   return (
     <section id={id} style={{ padding: "72px 24px", ...style }}>
-      <div style={{ maxWidth: 1080, margin: "0 auto" }}>{children}</div>
+      <div style={{ maxWidth: 1080, margin: "0 auto" }}><Reveal>{children}</Reveal></div>
     </section>
   );
 }
@@ -356,8 +453,9 @@ function Nav({ onLogin }) {
 function Inicio() {
   return (
     <Section style={{ paddingTop: 72, paddingBottom: 60, position: "relative", overflow: "hidden" }}>
-      <div style={{ position: "absolute", top: -140, right: -160, width: 380, height: 380, borderRadius: "50%", background: C.card, opacity: 0.5 }} />
-      <div className="av-hero-grid">
+      <div className="av-glow-orb" style={{ top: -140, right: -160, width: 380, height: 380, background: C.gold, opacity: 0.22 }} />
+      <div className="av-glow-orb" style={{ bottom: -100, left: -120, width: 300, height: 300, background: C.teal, opacity: 0.16, animationDelay: "-4s" }} />
+      <div className="av-hero-grid" style={{ position: "relative" }}>
         <div>
           <Eyebrow>Plataforma de salario bajo demanda</Eyebrow>
           <h1 style={{ fontFamily: DISPLAY, fontSize: "clamp(30px, 5vw, 48px)", color: C.ink, fontWeight: 700, lineHeight: 1.14, margin: "0 0 18px" }}>
@@ -379,8 +477,10 @@ function Inicio() {
             ))}
           </div>
         </div>
-        <Card style={{ padding: 0, overflow: "hidden", aspectRatio: "4/3", display: "flex", alignItems: "center", justifyContent: "center", position: "relative", background: `linear-gradient(160deg, ${C.card}, ${C.bgAlt})` }}>
+        <Card hoverable={false} style={{ padding: 0, overflow: "hidden", aspectRatio: "4/3", display: "flex", alignItems: "center", justifyContent: "center", position: "relative", background: `linear-gradient(160deg, ${C.card}, ${C.bgAlt})` }}>
+          <span style={{ position: "absolute", width: 96, height: 96, borderRadius: "50%", border: `1.5px solid ${C.gold}55`, animation: "av-ping 2.2s cubic-bezier(0,0,0.2,1) infinite" }} />
           <button
+            className="av-btn"
             onClick={() => window.open(waLink("Hola, me gustaría ver una demostración de cómo funciona Vanza."), "_blank")}
             style={{ background: "rgba(217,162,75,0.15)", border: `1.5px solid ${C.gold}`, borderRadius: "50%", width: 72, height: 72, display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer" }}
             aria-label="Solicitar demostración"
@@ -941,11 +1041,44 @@ function TopBar({ title, subtitle, onLogout }) {
   );
 }
 
+function Skel({ w, h = 14, style }) {
+  return <div className="av-skeleton" style={{ width: w, height: h, ...style }} />;
+}
+function DashboardSkeleton() {
+  return (
+    <div>
+      <div className="av-stats-grid" style={{ marginBottom: 22 }}>
+        {[0, 1, 2].map((i) => (
+          <Card key={i} hoverable={false} style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+            <Skel w={18} h={18} style={{ borderRadius: 6 }} />
+            <Skel w={70} h={22} />
+            <Skel w={110} h={11} />
+          </Card>
+        ))}
+      </div>
+      <Card hoverable={false}>
+        <Skel w={160} h={18} style={{ marginBottom: 18 }} />
+        {[0, 1, 2, 3].map((i) => (
+          <div key={i} style={{ display: "flex", gap: 16, padding: "12px 0", borderBottom: `1px solid ${C.cardBorder}` }}>
+            <Skel w="100%" h={14} style={{ flex: 1.4 }} />
+            <Skel w="100%" h={14} style={{ flex: 1 }} />
+            <Skel w="100%" h={14} style={{ flex: 0.8 }} />
+            <Skel w="100%" h={14} style={{ flex: 1 }} />
+          </div>
+        ))}
+      </Card>
+    </div>
+  );
+}
 function StatCard({ icon, label, value }) {
+  const isNumeric = typeof value === "number";
+  const [countRef, animated] = useCountUp(isNumeric ? value : 0);
   return (
     <Card style={{ display: "flex", flexDirection: "column", gap: 8 }}>
       {icon}
-      <span style={{ fontFamily: MONO, fontSize: 22, color: C.ink, fontWeight: 600 }}>{value}</span>
+      <span ref={isNumeric ? countRef : null} className={isNumeric ? undefined : "av-fade-scale"} style={{ fontFamily: MONO, fontSize: 22, color: C.ink, fontWeight: 600 }}>
+        {isNumeric ? animated.toLocaleString("es-DO") : value}
+      </span>
       <span style={{ fontFamily: BODY, fontSize: 12, color: C.inkFaint }}>{label}</span>
     </Card>
   );
@@ -1071,7 +1204,15 @@ function EmployeeDashboard({ employee, token, onLogout }) {
           </Card>
           <Card>
             <h3 style={{ fontFamily: DISPLAY, color: C.ink, fontSize: 18, margin: "0 0 14px" }}>Historial</h3>
-            {loading ? <div style={{ display: "flex", alignItems: "center", gap: 8, fontFamily: BODY, fontSize: 13.5, color: C.inkDim }}><Loader2 size={15} className="spin" /> Cargando...</div> : myAdvances.length === 0 ? <EmptyNote>Aún no has solicitado ningún adelanto.</EmptyNote> : (
+            {loading ? (
+              <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+                {[0, 1].map((i) => (
+                  <div key={i} style={{ display: "flex", justifyContent: "space-between", padding: "10px 0" }}>
+                    <Skel w={90} h={16} /><Skel w={70} h={22} style={{ borderRadius: 999 }} />
+                  </div>
+                ))}
+              </div>
+            ) : myAdvances.length === 0 ? <EmptyNote>Aún no has solicitado ningún adelanto.</EmptyNote> : (
               <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
                 {myAdvances.map((a) => (
                   <div key={a.id} style={{ padding: "10px 0", borderBottom: `1px solid ${C.cardBorder}` }}>
@@ -1759,8 +1900,11 @@ function CompanyDashboard({ company, token, onLogout }) {
   }
   if (loading) {
     return (
-      <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
-        <Loader2 size={26} color={C.gold} className="spin" />
+      <div style={{ minHeight: "100vh", padding: "20px 20px 60px" }}>
+        <TopBar title={company.name} subtitle="Empresa" onLogout={onLogout} />
+        <div style={{ maxWidth: 980, margin: "28px auto 0" }}>
+          <DashboardSkeleton />
+        </div>
       </div>
     );
   }
@@ -1776,13 +1920,14 @@ function CompanyDashboard({ company, token, onLogout }) {
               background: "none", border: "none", cursor: "pointer", fontFamily: BODY, fontWeight: 600, fontSize: 14,
               padding: "10px 2px", color: tab === key ? C.ink : C.inkFaint,
               borderBottom: tab === key ? `2px solid ${C.gold}` : "2px solid transparent",
+              transition: "color 0.2s ease, border-color 0.25s cubic-bezier(0.16, 1, 0.3, 1)",
             }}
           >
             {label}
           </button>
         ))}
       </div>
-      <div style={{ maxWidth: 980, margin: "20px auto 0" }}>
+      <div key={tab} className="av-fade-scale" style={{ maxWidth: 980, margin: "20px auto 0" }}>
         {tab === "resumen" && (
           <>
             <ErrorNote>{dashWarning}</ErrorNote>
