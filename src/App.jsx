@@ -12,7 +12,7 @@ import {
 } from "lucide-react";
 
 /* =======================================================================
-   AVANCE — single integrated application
+   VANZA — single integrated application
    · Public marketing website (sells the service to companies)
    · Behind "Iniciar sesión": the real product (employee + company logins,
      backed by Supabase — see src/lib/api.ts and supabase/schema.sql)
@@ -206,7 +206,7 @@ function Logo({ size = 22 }) {
       <div style={{ width: size + 10, height: size + 10, borderRadius: 8, background: C.gold, display: "flex", alignItems: "center", justifyContent: "center" }}>
         <Wallet size={size - 4} color="#2B1B0F" strokeWidth={2.4} />
       </div>
-      <span style={{ fontFamily: DISPLAY, fontWeight: 700, fontSize: size, color: C.ink }}>Avance</span>
+      <span style={{ fontFamily: DISPLAY, fontWeight: 700, fontSize: size, color: C.ink }}>Vanza</span>
     </div>
   );
 }
@@ -335,7 +335,7 @@ function Nav({ onLogin }) {
           <div style={{ width: 30, height: 30, borderRadius: 8, background: C.gold, display: "flex", alignItems: "center", justifyContent: "center" }}>
             <Wallet size={16} color="#2B1B0F" strokeWidth={2.4} />
           </div>
-          <span style={{ fontFamily: DISPLAY, fontWeight: 700, fontSize: 20, color: C.ink }}>Avance</span>
+          <span style={{ fontFamily: DISPLAY, fontWeight: 700, fontSize: 20, color: C.ink }}>Vanza</span>
         </div>
         <nav className="av-nav-links">
           {links.map(([label, href]) => (
@@ -364,14 +364,14 @@ function Inicio() {
             Un beneficio que reduce la rotación de tu personal — a costo cero de implementación.
           </h1>
           <p style={{ fontFamily: BODY, fontSize: 16.5, color: C.inkDim, maxWidth: 480, margin: "0 0 30px", lineHeight: 1.6 }}>
-            Avance permite que tus colaboradores accedan a una porción del salario que ya han devengado en la quincena en curso, antes de la fecha de pago, sin que tu empresa adelante capital ni asuma riesgo de flujo de caja.
+            Vanza permite que tus colaboradores accedan a una porción del salario que ya han devengado en la quincena en curso, antes de la fecha de pago, sin que tu empresa adelante capital ni asuma riesgo de flujo de caja.
           </p>
           <div style={{ display: "flex", gap: 14, flexWrap: "wrap" }}>
             <PrimaryButton href="#contacto">Solicitar una propuesta <ArrowRight size={16} /></PrimaryButton>
-            <GhostButton href={waLink("Hola, me gustaría hablar con un asesor de Avance sobre los planes disponibles y cómo funciona la plataforma para mi empresa.")}><MessagesSquare size={16} /> Hablar con un asesor</GhostButton>
+            <GhostButton href={waLink("Hola, me gustaría hablar con un asesor de Vanza sobre los planes disponibles y cómo funciona la plataforma para mi empresa.")}><MessagesSquare size={16} /> Hablar con un asesor</GhostButton>
           </div>
           <div style={{ marginTop: 40, display: "flex", gap: 32, flexWrap: "wrap" }}>
-            {[["0", "costo de implementación"], ["<24h", "tiempo de desembolso"], ["100%", "operado por Avance"]].map(([n, l]) => (
+            {[["0", "costo de implementación"], ["<24h", "tiempo de desembolso"], ["100%", "operado por Vanza"]].map(([n, l]) => (
               <div key={l}>
                 <div style={{ fontFamily: MONO, fontSize: 24, color: C.gold, fontWeight: 600 }}>{n}</div>
                 <div style={{ fontFamily: BODY, fontSize: 12, color: C.inkFaint }}>{l}</div>
@@ -381,13 +381,13 @@ function Inicio() {
         </div>
         <Card style={{ padding: 0, overflow: "hidden", aspectRatio: "4/3", display: "flex", alignItems: "center", justifyContent: "center", position: "relative", background: `linear-gradient(160deg, ${C.card}, ${C.bgAlt})` }}>
           <button
-            onClick={() => window.open(waLink("Hola, me gustaría ver una demostración de cómo funciona Avance."), "_blank")}
+            onClick={() => window.open(waLink("Hola, me gustaría ver una demostración de cómo funciona Vanza."), "_blank")}
             style={{ background: "rgba(217,162,75,0.15)", border: `1.5px solid ${C.gold}`, borderRadius: "50%", width: 72, height: 72, display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer" }}
             aria-label="Solicitar demostración"
           >
             <PlayCircle size={36} color={C.gold} />
           </button>
-          <span style={{ position: "absolute", bottom: 18, fontFamily: BODY, fontSize: 12.5, color: C.inkFaint }}>Video: así se ve Avance en 90 segundos</span>
+          <span style={{ position: "absolute", bottom: 18, fontFamily: BODY, fontSize: 12.5, color: C.inkFaint }}>Video: así se ve Vanza en 90 segundos</span>
         </Card>
       </div>
     </Section>
@@ -428,7 +428,7 @@ function NuestraSolucion() {
       <Eyebrow color={C.teal}>Nuestra solución</Eyebrow>
       <H2>Una plataforma, tres roles claros</H2>
       <p style={{ fontFamily: BODY, fontSize: 15, color: C.inkDim, maxWidth: 620, marginBottom: 8 }}>
-        Avance conecta a la empresa, al colaborador y al fondo que financia los adelantos — cada uno con una función simple y bien delimitada.
+        Vanza conecta a la empresa, al colaborador y al fondo que financia los adelantos — cada uno con una función simple y bien delimitada.
       </p>
       <div className="av-grid-3" style={{ marginTop: 24 }}>
         {roles.map(([Icon, title, desc, color], i) => (
@@ -450,7 +450,7 @@ function ComoFunciona() {
     ["01", "La empresa solicita una propuesta", "Nos cuentas el tamaño de tu plantilla y te armamos un plan a la medida."],
     ["02", "Se afilia e integra la nómina", "Firmas el acuerdo y conectamos vía API o archivo cifrado — sin desarrollo a medida."],
     ["03", "Los colaboradores utilizan la app", "Consultan su devengado y piden adelantos cuando los necesiten, desde su celular."],
-    ["04", "La plataforma administra todo el proceso", "Avance financia, cobra la tarifa y recupera el monto en la nómina — de forma automática."],
+    ["04", "La plataforma administra todo el proceso", "Vanza financia, cobra la tarifa y recupera el monto en la nómina — de forma automática."],
   ];
   return (
     <Section id="como-funciona">
@@ -529,21 +529,21 @@ function Planes() {
   const plans = [
     {
       name: "Plan Básico", price: "Gratis", note: "para toda empresa afiliada",
-      features: ["Implementación sin costo", "Dashboard estándar", "Fondo revolvente propio de Avance", "Soporte por correo"],
+      features: ["Implementación sin costo", "Dashboard estándar", "Fondo revolvente propio de Vanza", "Soporte por correo"],
       cta: "Empezar gratis", highlight: false,
-      wa: waLink("Hola, quiero afiliar mi empresa al Plan Básico de Avance (sin costo). ¿Cómo empezamos?"),
+      wa: waLink("Hola, quiero afiliar mi empresa al Plan Básico de Vanza (sin costo). ¿Cómo empezamos?"),
     },
     {
       name: "Plan Empresarial", price: "RD$50–80", note: "por empleado activo/mes",
       features: ["Todo lo del Plan Básico", "La empresa subsidia la tarifa del empleado", "Beneficio laboral 100% visible", "Reportes de adopción"],
       cta: "Solicitar propuesta", highlight: true,
-      wa: waLink("Hola, quiero solicitar una propuesta para el Plan Empresarial de Avance (iguala por empleado) para mi empresa."),
+      wa: waLink("Hola, quiero solicitar una propuesta para el Plan Empresarial de Vanza (iguala por empleado) para mi empresa."),
     },
     {
       name: "Plan Corporativo", price: "RD$8,000–15,000", note: "mensual, según tamaño",
       features: ["Todo lo del Plan Básico", "Analítica avanzada", "Soporte prioritario", "Integración personalizada"],
       cta: "Hablar con ventas", highlight: false,
-      wa: waLink("Hola, quiero hablar con ventas sobre el Plan Corporativo de Avance para mi empresa."),
+      wa: waLink("Hola, quiero hablar con ventas sobre el Plan Corporativo de Vanza para mi empresa."),
     },
   ];
   return (
@@ -591,8 +591,8 @@ function FaqItem({ q, a, open, onToggle }) {
 function Faq() {
   const faqs = [
     ["¿Esto es un préstamo?", "No. El empleado accede a una porción del salario que ya ganó, no a dinero prestado. No genera intereses ni afecta su historial crediticio."],
-    ["¿Nuestra empresa adelanta dinero?", "No. El capital para los adelantos lo pone Avance a través de su fondo revolvente propio. Tu empresa nunca desembolsa recursos."],
-    ["¿Qué pasa si un empleado se va antes de que se recupere un adelanto?", "El monto se descuenta con prioridad de su liquidación final. Si no alcanza, la diferencia es responsabilidad de Avance frente al empleado, no de tu empresa."],
+    ["¿Nuestra empresa adelanta dinero?", "No. El capital para los adelantos lo pone Vanza a través de su fondo revolvente propio. Tu empresa nunca desembolsa recursos."],
+    ["¿Qué pasa si un empleado se va antes de que se recupere un adelanto?", "El monto se descuenta con prioridad de su liquidación final. Si no alcanza, la diferencia es responsabilidad de Vanza frente al empleado, no de tu empresa."],
     ["¿Cuánto tarda la implementación?", "La integración con tu sistema de nómina toma días, no meses — es una conexión estándar vía API o archivo cifrado, sin desarrollo a medida."],
     ["¿Qué necesita hacer nuestro equipo de RRHH?", "Prácticamente nada de forma manual: el descuento se automatiza en la nómina siguiente. Solo revisas los reportes cuando quieras."],
   ];
@@ -644,9 +644,9 @@ function Contacto() {
             Cuéntanos sobre tu empresa y te armamos una propuesta a la medida — tamaño de plantilla, sector y qué plan tiene más sentido para ustedes.
           </p>
           <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-            <a href={waLink("Hola, quisiera más información sobre Avance.")} target="_blank" rel="noopener noreferrer" style={{ display: "flex", gap: 10, alignItems: "center", textDecoration: "none" }}><MessagesSquare size={16} color={C.gold} /><span style={{ fontFamily: BODY, fontSize: 14, color: C.inkDim }}>WhatsApp: +1 (849) 587-1799</span></a>
+            <a href={waLink("Hola, quisiera más información sobre Vanza.")} target="_blank" rel="noopener noreferrer" style={{ display: "flex", gap: 10, alignItems: "center", textDecoration: "none" }}><MessagesSquare size={16} color={C.gold} /><span style={{ fontFamily: BODY, fontSize: 14, color: C.inkDim }}>WhatsApp: +1 (849) 587-1799</span></a>
             <a href="tel:+18495871799" style={{ display: "flex", gap: 10, alignItems: "center", textDecoration: "none" }}><Phone size={16} color={C.gold} /><span style={{ fontFamily: BODY, fontSize: 14, color: C.inkDim }}>Teléfono: +1 (849) 587-1799</span></a>
-            <a href="mailto:ventas@avance.com.do" style={{ display: "flex", gap: 10, alignItems: "center", textDecoration: "none" }}><Mail size={16} color={C.gold} /><span style={{ fontFamily: BODY, fontSize: 14, color: C.inkDim }}>ventas@avance.com.do</span></a>
+            <a href="mailto:ventas@vanza.com.do" style={{ display: "flex", gap: 10, alignItems: "center", textDecoration: "none" }}><Mail size={16} color={C.gold} /><span style={{ fontFamily: BODY, fontSize: 14, color: C.inkDim }}>ventas@vanza.com.do</span></a>
           </div>
         </div>
         <Card>
@@ -704,19 +704,19 @@ function Footer() {
               <div style={{ width: 28, height: 28, borderRadius: 8, background: C.gold, display: "flex", alignItems: "center", justifyContent: "center" }}>
                 <Wallet size={15} color="#2B1B0F" strokeWidth={2.4} />
               </div>
-              <span style={{ fontFamily: DISPLAY, fontWeight: 700, fontSize: 18, color: C.ink }}>Avance</span>
+              <span style={{ fontFamily: DISPLAY, fontWeight: 700, fontSize: 18, color: C.ink }}>Vanza</span>
             </div>
             <p style={{ fontFamily: BODY, fontSize: 13, color: C.inkFaint, maxWidth: 280, lineHeight: 1.6 }}>
               Plataforma de salario bajo demanda para empresas dominicanas. Un beneficio real, sin riesgo de flujo de caja.
             </p>
             <div style={{ display: "flex", gap: 12, marginTop: 16 }}>
-              <a href={waLink("Hola, quisiera más información sobre Avance.")} target="_blank" rel="noopener noreferrer" style={{ color: C.inkFaint, display: "flex" }} aria-label="Escribir por WhatsApp">
+              <a href={waLink("Hola, quisiera más información sobre Vanza.")} target="_blank" rel="noopener noreferrer" style={{ color: C.inkFaint, display: "flex" }} aria-label="Escribir por WhatsApp">
                 <Globe size={17} />
               </a>
-              <a href="mailto:ventas@avance.com.do" style={{ color: C.inkFaint, display: "flex" }} aria-label="Enviar correo">
+              <a href="mailto:ventas@vanza.com.do" style={{ color: C.inkFaint, display: "flex" }} aria-label="Enviar correo">
                 <AtSign size={17} />
               </a>
-              <a href={waLink("Hola, quisiera más información sobre Avance.")} target="_blank" rel="noopener noreferrer" style={{ color: C.inkFaint, display: "flex" }} aria-label="Compartir por WhatsApp">
+              <a href={waLink("Hola, quisiera más información sobre Vanza.")} target="_blank" rel="noopener noreferrer" style={{ color: C.inkFaint, display: "flex" }} aria-label="Compartir por WhatsApp">
                 <Share2 size={17} />
               </a>
             </div>
@@ -733,14 +733,14 @@ function Footer() {
             </p>
           </div>
           <FooterCol title="Contacto" links={[
-            { label: "ventas@avance.com.do", href: "mailto:ventas@avance.com.do" },
-            { label: "+1 (849) 587-1799", href: waLink("Hola, quisiera más información sobre Avance.") },
+            { label: "ventas@vanza.com.do", href: "mailto:ventas@vanza.com.do" },
+            { label: "+1 (849) 587-1799", href: waLink("Hola, quisiera más información sobre Vanza.") },
             "Santo Domingo, RD",
           ]} />
           <FooterCol title="Legal" links={["Política de privacidad", "Términos y condiciones"]} />
         </div>
         <div style={{ borderTop: `1px solid ${C.cardBorder}`, marginTop: 32, paddingTop: 20, textAlign: "center" }}>
-          <p style={{ fontFamily: BODY, fontSize: 12, color: C.inkFaint }}>© {new Date().getFullYear()} Avance — República Dominicana</p>
+          <p style={{ fontFamily: BODY, fontSize: 12, color: C.inkFaint }}>© {new Date().getFullYear()} Vanza — República Dominicana</p>
         </div>
       </div>
     </footer>
@@ -1283,7 +1283,7 @@ function mapPayrollRow(row) {
   let salarioNeto = buckets.salarioNeto != null ? Number(buckets.salarioNeto) : null;
   if ((salarioNeto == null || isNaN(salarioNeto)) && buckets.salarioMensual != null) {
     // No vino salario neto/quincenal directo — usamos la lógica de la app:
-    // el ciclo de Avance es quincenal, así que el salario mensual se divide entre 2.
+    // el ciclo de Vanza es quincenal, así que el salario mensual se divide entre 2.
     const mensual = Number(buckets.salarioMensual);
     salarioNeto = !isNaN(mensual) ? mensual / 2 : null;
   }
@@ -1966,7 +1966,7 @@ function ConfigMissingNotice() {
   );
 }
 
-function AvanceApp() {
+function VanzaApp() {
   const [page, setPage] = useState("web"); // 'web' | 'portal' | 'employee' | 'company'
   const [session, setSession] = useState(() => api.loadSession()); // { type: 'employee'|'company', token, data }
 
@@ -2013,7 +2013,7 @@ function AvanceApp() {
 export default function App() {
   return (
     <ErrorBoundary>
-      <AvanceApp />
+      <VanzaApp />
     </ErrorBoundary>
   );
 }
